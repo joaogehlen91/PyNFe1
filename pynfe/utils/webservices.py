@@ -189,7 +189,7 @@ NFCE = {
 	    	'INUTILIZACAO': '',
 	    	'EVENTOS': '',
 	    	'QR': 'http://www4.fazenda.rj.gov.br/consultaNFCe/QRCode?',
-	    	'URL': 'www.nfce.fazenda.rj.gov.br/consulta'
+	    	'URL': 'www.fazenda.rj.gov.br/nfce/consulta'
 	    },
 	    # Os Web Services de homologação da NFC-e 4.00 são:
 		# https://homologacao.nfce.fazenda.sp.gov.br/ws/NFeAutorizacao4.asmx
@@ -230,7 +230,10 @@ NFCE = {
 	    	'CHAVE': '',
 	    	'INUTILIZACAO': '',
 	    	'EVENTOS': '',
-	    	'QR': ''
+	    	'QR': 'sat.sef.sc.gov.br/nfce/consulta?p=',
+	    	'HTTPS': 'https://',
+	    	'HOMOLOGACAO': 'https://hom.',
+	    	'URL': 'sat.sef.sc.gov.br/nfce/consulta'
 	    },
 	    'RS': {
 	    	'STATUS': 'sefazrs.rs.gov.br/ws/NfeStatusServico/NfeStatusServico4.asmx',
@@ -245,13 +248,16 @@ NFCE = {
 	    	'HOMOLOGACAO': 'https://nfce-homologacao.'
 	    },
 	    'MS': {
-	    	'STATUS': '',
-	    	'AUTORIZACAO': '',
-	    	'RECIBO': '',
-	    	'CHAVE': '',
-	    	'INUTILIZACAO': '',
-	    	'EVENTOS': '',
-	    	'QR': ''
+	    	'STATUS': 'sefaz.ms.gov.br/ws/NFeStatusServico4?wsdl',
+	    	'AUTORIZACAO': 'sefaz.ms.gov.br/ws/NFeAutorizacao4?wsdl',
+	    	'RECIBO': 'sefaz.ms.gov.br/ws/NFeRetAutorizacao4?wsdl',
+	    	'CHAVE': 'sefaz.ms.gov.br/ws/NFeConsultaProtocolo4?wsdl',
+	    	'INUTILIZACAO': 'sefaz.ms.gov.br/ws/NFeInutilizacao4?wsdl',
+	    	'EVENTOS': 'sefaz.ms.gov.br/ws/NFeRetAutorizacao4',
+	    	'QR': 'http://www.dfe.ms.gov.br/nfce/qrcode',
+	    	'URL': 'http://www.dfe.ms.gov.br/nfce/consulta',
+	    	'HTTPS': 'https://nfce.',
+	    	'HOMOLOGACAO': 'https://hom.nfce.'
 	    },
 	    'MT': {
 	    	'QR': 'sefaz.mt.gov.br/nfce/consultanfce?',
@@ -352,10 +358,10 @@ NFE = {
 	    	'STATUS': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeStatusServico4',
 	    	'AUTORIZACAO': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4',
 	    	'RECIBO': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeRetAutorizacao4',
-	    	'CHAVE': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeConsulta4',
+	    	'CHAVE': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeConsultaProtocolo4',
 	    	'INUTILIZACAO': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeInutilizacao4',
 	    	'EVENTOS': 'nfe.fazenda.mg.gov.br/nfe2/services/NFeRecepcaoEvento4',
-	    	'CADASTRO': 'nfe.fazenda.mg.gov.br/nfe2/services/cadconsultacadastro2',
+	    	'CADASTRO': 'nfe.fazenda.mg.gov.br/nfe2/services/CadConsultaCadastro4',
 	    	'HTTPS': 'https://',
 	    	'HOMOLOGACAO': 'https://h'
 	    },
@@ -389,7 +395,7 @@ NFE = {
 	    	'CHAVE': 'sefazrs.rs.gov.br/ws/NfeConsulta/NfeConsulta4.asmx',
 	    	'INUTILIZACAO': 'sefazrs.rs.gov.br/ws/nfeinutilizacao/nfeinutilizacao4.asmx',
 	    	'EVENTOS': 'sefazrs.rs.gov.br/ws/recepcaoevento/recepcaoevento4.asmx',
-	    	'CADASTRO': 'cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro2.asmx',
+	    	'CADASTRO': 'https://cad.sefazrs.rs.gov.br/ws/cadconsultacadastro/cadconsultacadastro4.asmx',
 	    	'DOWNLOAD': 'sefazrs.rs.gov.br/ws/nfeDownloadNF/nfeDownloadNF.asmx',
 	    	'DESTINADAS': 'sefazrs.rs.gov.br/ws/nfeConsultaDest/nfeConsultaDest.asmx',
 	    	'HTTPS': 'https://nfe.',
@@ -496,5 +502,22 @@ NFSE = {
 		'SUBSTITUIR':'SubstituirNfse',
 		'HTTPS':'https://producao.ginfes.com.br/ServiceGinfesImpl?wsdl',
 		'HOMOLOGACAO':'https://homologacao.ginfes.com.br/ServiceGinfesImpl?wsdl'
+	}
+}
+
+# MDF-e
+MDFE = {
+	# unico autorizador de MDF-e
+	'SVRS': {
+		'RECEPCAO': 'MDFeRecepcao/MDFeRecepcao.asmx',
+		'RECEPCAO_SINC': 'MDFeRecepcaoSinc/MDFeRecepcaoSinc.asmx',
+		'RET_RECEPCAO': 'mdferetrecepcao/MDFeRetRecepcao.asmx',
+		'EVENTOS': 'mdferecepcaoevento/MDFeRecepcaoEvento.asmx',
+		'CONSULTA': 'mdfeconsulta/MDFeConsulta.asmx',
+		'STATUS': 'mdfestatusservico/MDFeStatusServico.asmx',
+		'NAO_ENCERRADOS': 'mdfeconsnaoenc/MDFeConsNaoEnc.asmx',
+		'HTTPS': 'https://mdfe.svrs.rs.gov.br/ws/',
+		'HOMOLOGACAO': 'https://mdfe-homologacao.svrs.rs.gov.br/ws/',
+		'QRCODE': 'https://dfe-portal.svrs.rs.gov.br/mdfe/qrCode'
 	}
 }
