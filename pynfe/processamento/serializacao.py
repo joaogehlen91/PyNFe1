@@ -524,6 +524,10 @@ class SerializacaoXML(Serializacao):
                 # etree.SubElement(cofins_item, 'vAliqProd').text = produto_servico.cofins_aliquota_percentual
                 # etree.SubElement(cofins_item, 'vCOFINS').text = produto_servico.cofins_valor
 
+        # Informações adicionais do produto
+        if produto_servico.inf_adicionais_produto:
+            etree.SubElement(raiz, 'infAdProd').text = produto_servico.inf_adicionais_produto
+
         if retorna_string:
             return etree.tostring(raiz, encoding="unicode", pretty_print=True)
         else:
@@ -562,13 +566,15 @@ class SerializacaoXML(Serializacao):
         etree.SubElement(ide, 'serie').text = nota_fiscal.serie
         etree.SubElement(ide, 'nNF').text = str(nota_fiscal.numero_nf)
         etree.SubElement(ide, 'dhEmi').text = nota_fiscal.data_emissao.strftime('%Y-%m-%dT%H:%M:%S') + tz
-        if nota_fiscal.data_saida_entrada:
-            etree.SubElement(ide, 'dhSaiEnt').text = nota_fiscal.data_saida_entrada.strftime('%Y-%m-%dT%H:%M:%S') + tz
-        """dhCont Data e Hora da entrada em contingência E B01 D 0-1 Formato AAAA-MM-DDThh:mm:ssTZD (UTC - Universal
-            Coordinated Time)
-            Exemplo: no formato UTC para os campos de Data-Hora, "TZD" pode ser -02:00 (Fernando de Noronha), -03:00 (Brasília) ou -04:00 (Manaus), no
-            horário de verão serão -01:00, -02:00 e -03:00. Exemplo: "2010-08-19T13:00:15-03:00".
-        """
+        # Apenas NF-e
+        if nota_fiscal.modelo == 55:
+            if nota_fiscal.data_saida_entrada:
+                etree.SubElement(ide, 'dhSaiEnt').text = nota_fiscal.data_saida_entrada.strftime('%Y-%m-%dT%H:%M:%S') + tz
+            """dhCont Data e Hora da entrada em contingência E B01 D 0-1 Formato AAAA-MM-DDThh:mm:ssTZD (UTC - Universal
+                Coordinated Time)
+                Exemplo: no formato UTC para os campos de Data-Hora, "TZD" pode ser -02:00 (Fernando de Noronha), -03:00 (Brasília) ou -04:00 (Manaus), no
+                horário de verão serão -01:00, -02:00 e -03:00. Exemplo: "2010-08-19T13:00:15-03:00".
+            """
         etree.SubElement(ide, 'tpNF').text = str(nota_fiscal.tipo_documento)  # 0=entrada 1=saida
         """ nfce suporta apenas operação interna
             Identificador de local de destino da operação 1=Operação interna;2=Operação interestadual;3=Operação com exterior.
@@ -603,6 +609,10 @@ class SerializacaoXML(Serializacao):
         else:
             etree.SubElement(ide, 'indFinal').text = str(nota_fiscal.cliente_final)
             etree.SubElement(ide, 'indPres').text = str(nota_fiscal.indicador_presencial)
+        # Rejeição 435: NF-e não pode ter o indicativo do intermediador quando for modelo 55
+        #               e informando o indicativo de presença (indPres) igual a 0, 1 ou 5.
+        if (nota_fiscal.modelo in [55, 65]) and (nota_fiscal.indicador_presencial not in [0, 1, 5]):
+            etree.SubElement(ide, 'indIntermed').text = str(nota_fiscal.indicador_intermediador)
         etree.SubElement(ide, 'procEmi').text = str(nota_fiscal.processo_emissao)
         etree.SubElement(ide, 'verProc').text = '%s %s'%(self._nome_aplicacao, nota_fiscal.versao_processo_emissao)
 
