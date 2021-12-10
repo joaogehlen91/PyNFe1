@@ -95,7 +95,8 @@ class SerializacaoXML(Serializacao):
         else:
             etree.SubElement(raiz, 'CNPJ').text = so_numeros(emitente.cnpj)
         etree.SubElement(raiz, 'xNome').text = emitente.razao_social
-        etree.SubElement(raiz, 'xFant').text = emitente.nome_fantasia
+        if emitente.nome_fantasia:
+            etree.SubElement(raiz, 'xFant').text = emitente.nome_fantasia
         # Endereço
         endereco = etree.SubElement(raiz, 'enderEmit')
         etree.SubElement(endereco, 'xLgr').text = emitente.endereco_logradouro
@@ -146,7 +147,8 @@ class SerializacaoXML(Serializacao):
                 cliente.endereco_municipio, cliente.endereco_uf)
             etree.SubElement(endereco, 'xMun').text = cliente.endereco_municipio
             etree.SubElement(endereco, 'UF').text = cliente.endereco_uf
-            etree.SubElement(endereco, 'CEP').text = so_numeros(cliente.endereco_cep)
+            if cliente.endereco_cep:
+                etree.SubElement(endereco, 'CEP').text = so_numeros(cliente.endereco_cep)
             etree.SubElement(endereco, 'cPais').text = cliente.endereco_pais
             etree.SubElement(endereco, 'xPais').text = obter_pais_por_codigo(cliente.endereco_pais)
             if cliente.endereco_telefone:
